@@ -1,13 +1,10 @@
 package ch.sectioninformatique.template.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import ch.sectioninformatique.template.security.Role;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -47,27 +44,42 @@ public class User implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+    
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // @TODO: Create some roles 
-        return List.of(); 
+        // SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+        // return List.of(authority);
+        return this.role.getName().getGrantedAuthorities();
+        
     }
+    
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role role;
 
     // Constructors
     public User() {
         super();
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public User(Integer id, String firstName, String lastName, String email, String password, Date createdAt,
+        Date updatedAt, Role role)
+    {
         super();
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.role = role;
     }
 
     // Implementation of UserDetails methods
+    @Override
     public String getPassword() {
         return password;
     }

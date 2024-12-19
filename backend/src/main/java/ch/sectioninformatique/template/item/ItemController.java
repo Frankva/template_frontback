@@ -2,6 +2,8 @@ package ch.sectioninformatique.template.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +26,11 @@ public class ItemController {
      * 
      * @return - A String
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public String getHello() {
         return "<strong>Hello World !</strong><br>" +
-               "<strong>JAVA_HOME : </strong>" + environment.getProperty("JAVA_HOME") + "<br>" +
+               "<strong>JAreq_0891d0baeaa243dba3ac7683936cb32dVA_HOME : </strong>" + environment.getProperty("JAVA_HOME") + "<br>" +
                "<strong>Spring active profile : </strong>" + environment.getProperty("spring.profiles.active") + "<br>" +
                "<strong>Database used : </strong>" + environment.getProperty("spring.datasource.url");
     }
@@ -36,6 +39,7 @@ public class ItemController {
      * Read - Get all items
      * @return - An Iterable object of Items full filled
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/items")
     public Iterable<Item> getItems() {
         return itemService.getItems();
@@ -45,6 +49,7 @@ public class ItemController {
      * Read - Get one item by id
      * @return - A single item object
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/items/{id}")
     public Item getItemById(@PathVariable Long id) {
         /* Try to get the corresponding item, else throw an exception */

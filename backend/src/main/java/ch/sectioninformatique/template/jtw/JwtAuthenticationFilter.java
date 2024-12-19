@@ -1,4 +1,4 @@
-package ch.sectioninformatique.template.auth;
+package ch.sectioninformatique.template.jtw;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

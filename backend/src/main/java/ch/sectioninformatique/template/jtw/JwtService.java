@@ -1,4 +1,4 @@
-package ch.sectioninformatique.template.auth;
+package ch.sectioninformatique.template.jtw;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

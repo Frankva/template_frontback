@@ -1,8 +1,10 @@
 package ch.sectioninformatique.template.auth;
 
+import ch.sectioninformatique.template.jtw.JwtService;
 import ch.sectioninformatique.template.user.User;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @PreAuthorize("permitAll")
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authService.signup(registerUserDto);
@@ -27,6 +30,7 @@ public class AuthController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    @PreAuthorize("permitAll")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginUserDto request) {
         User authenticatedUser = authService.authenticate(request);

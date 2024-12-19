@@ -1,5 +1,6 @@
 package ch.sectioninformatique.template.auth;
 
+import ch.sectioninformatique.template.jtw.JwtService;
 import ch.sectioninformatique.template.user.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
