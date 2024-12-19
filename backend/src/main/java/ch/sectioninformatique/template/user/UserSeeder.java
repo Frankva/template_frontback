@@ -3,6 +3,7 @@ package ch.sectioninformatique.template.user;
 import ch.sectioninformatique.template.security.PermissionRepository;
 import ch.sectioninformatique.template.security.Role;
 import ch.sectioninformatique.template.security.RoleEnum;
+import ch.sectioninformatique.template.security.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ public class UserSeeder implements CommandLineRunner {
         
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private PermissionRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public UserSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;

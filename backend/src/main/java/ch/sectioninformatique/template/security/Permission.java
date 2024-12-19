@@ -21,9 +21,6 @@ public class Permission {
     @Enumerated(EnumType.STRING)
     private PermissionEnum name;
     
-    @Column(nullable = false)
-    private String description;
-
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface PermissionRepository extends CrudRepository<Permission, Integer> {
-    Optional<Role> findByName(RoleEnum name);
+    Optional<Role> findByName(PermissionEnum name);
 }
