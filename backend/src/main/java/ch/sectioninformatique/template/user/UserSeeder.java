@@ -1,6 +1,5 @@
 package ch.sectioninformatique.template.user;
 
-import ch.sectioninformatique.template.security.PermissionRepository;
 import ch.sectioninformatique.template.security.Role;
 import ch.sectioninformatique.template.security.RoleEnum;
 import ch.sectioninformatique.template.security.RoleRepository;
@@ -17,9 +16,10 @@ public class UserSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
 
-    public UserSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserSeeder implements CommandLineRunner {
     private void loadUserData() {
         if (userRepository.count() == 0) {
 
-            Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.STUDENT);
+            Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
             
             User user1 = new UserBuilder()
                     .setFirstName("John")

@@ -31,13 +31,5 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-    
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    // @JoinColumn(name = "permission_id", referencedColumnName = "id", nullable = false)
-    private Set<Permission> permissions;
-
-
-    
-    
 }
 
