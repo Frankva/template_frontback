@@ -57,7 +57,7 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
                 .setLastName(userDto.getLastName())
                 .setEmail(userDto.getEmail())
                 .setPassword(passwordEncoder.encode(userDto.getPassword()))
-                .setRole(optionalRole.get())
+                .addRole(optionalRole.get())
                 .build();
 
         userRepository.save(user);

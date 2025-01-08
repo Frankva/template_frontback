@@ -33,16 +33,12 @@ public class UserService {
     
     public User createAdministrator(RegisterUserDto input) {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.ADMIN);
-
-        if (optionalRole.isEmpty()) {
-            return null;
-        }
-
+        if (optionalRole.isEmpty()) return null;
         var user = new UserBuilder()
                 .setFirstName(input.getFirstName())
                 .setEmail(input.getEmail())
                 .setPassword(passwordEncoder.encode(input.getPassword()))
-                .setRole(optionalRole.get())
+                .addRole(optionalRole.get())
                 .build();
 
         return userRepository.save(user);

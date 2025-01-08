@@ -51,7 +51,7 @@ public class AuthService {
                 .setLastName(input.getLastName())
                 .setEmail(input.getEmail())
                 .setPassword(passwordEncoder.encode(input.getPassword()))
-                .setRole(optionalRole.get())
+                .addRole(optionalRole.get())
                 .build();
 
         return userRepository.save(user);

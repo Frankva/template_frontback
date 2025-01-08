@@ -1,21 +1,25 @@
 package ch.sectioninformatique.template.security;
 
+import ch.sectioninformatique.template.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.*;
 
 import java.util.Date;
 import java.util.Set;
 
-@Data
-@Table(name = "roles")
 @Entity
+@Table(name = "roles")
+@Setter
+@Getter
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Integer id;
+    private long id;
 
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -31,5 +35,9 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @JsonIgnore // avoid infinite recursion on print
+    private Set<User> users;
 }
 

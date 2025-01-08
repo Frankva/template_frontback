@@ -3,22 +3,24 @@ package ch.sectioninformatique.template.user;
 import ch.sectioninformatique.template.security.Role;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserBuilder {
 
-    private Integer id;
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private Date createdAt;
     private Date updatedAt;
-    private Role role;
+    private Set<Role> roles = new HashSet<>();
 
     public UserBuilder() {
     }
 
-    public UserBuilder setId(Integer id) {
+    public UserBuilder setId(long id) {
         this.id = id;
         return this;
     }
@@ -53,13 +55,18 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setRole(Role role) {
-        this.role = role;
+    public UserBuilder setRoles(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+    
+    public UserBuilder addRole(Role role) {
+        this.roles.add(role);
         return this;
     }
     
     public User build() {
         return new User(this.id, this.firstName, this.lastName, this.email,
-            this.password, this.createdAt, this.updatedAt, this.role);
+            this.password, this.createdAt, this.updatedAt, this.roles);
     }
 }

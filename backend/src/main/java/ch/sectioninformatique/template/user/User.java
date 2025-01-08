@@ -2,28 +2,26 @@ package ch.sectioninformatique.template.user;
 
 import ch.sectioninformatique.template.security.Role;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import lombok.Data;
 
 /* @Data annotation from the Lombok library automatically adds getters and setters */
 @Data
-@Table(name = "users")
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Integer id;
+    private long id;
 
     @Column(nullable = false, name = "first_name")
     private String firstName;
@@ -44,27 +42,28 @@ public class User implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-    
-    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
-        return List.of(authority);
-        
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        for (Role role : this.roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_"
+                    + role.getName().toString()));
+        }
+        return authorities;
     }
     
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     // Constructors
     public User() {
         super();
     }
 
-    public User(Integer id, String firstName, String lastName, String email, String password, Date createdAt,
-        Date updatedAt, Role role)
+    public User(long id, String firstName, String lastName, String email,
+                String password, Date createdAt, Date updatedAt,
+                Set<Role> roles)
     {
         super();
         this.id = id;
@@ -74,7 +73,7 @@ public class User implements UserDetails {
         this.password = password;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.role = role;
+        this.roles = roles;
     }
 
     // Implementation of UserDetails methods
