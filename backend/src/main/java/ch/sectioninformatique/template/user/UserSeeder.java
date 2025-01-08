@@ -16,7 +16,10 @@ public class UserSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
 
-    public UserSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserSeeder(UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        RoleRepository roleRepository)
+    {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;

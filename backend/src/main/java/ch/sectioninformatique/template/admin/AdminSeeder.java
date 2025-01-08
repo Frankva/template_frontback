@@ -19,7 +19,6 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
 
@@ -34,7 +33,8 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)
+    {
         this.createSuperAdministrator();
     }
 
@@ -45,8 +45,11 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
             .setEmail("super.admin@email.com")
             .setPassword("123456");
 
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN);
-        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
+        Optional<Role> optionalRole = roleRepository
+                .findByName(RoleEnum.SUPER_ADMIN);
+        
+        Optional<User> optionalUser = userRepository
+                .findByEmail(userDto.getEmail());
 
         if (optionalRole.isEmpty() || optionalUser.isPresent()) {
             return;
