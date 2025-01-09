@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
-    
+
     private final RoleRepository roleRepository;
 
 
@@ -26,12 +26,14 @@ public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
 
     private void loadRoles() {
         RoleEnum[] roleNames = new RoleEnum[] { RoleEnum.USER, RoleEnum.ADMIN,
-                RoleEnum.SUPER_ADMIN };
+                RoleEnum.SUPER_ADMIN, RoleEnum.STUDENT, RoleEnum.ADMINTRAINEE };
         
         Map<RoleEnum, String> roleDescriptionMap = Map.of(
                 RoleEnum.USER, "Default user role",
                 RoleEnum.ADMIN, "Administrator role",
-                RoleEnum.SUPER_ADMIN, "Super Administrator role"
+                RoleEnum.SUPER_ADMIN, "Super Administrator role",
+                RoleEnum.STUDENT, "Student role",
+                RoleEnum.ADMINTRAINEE, "Administrateur trainee"
         );
 
         Arrays.stream(roleNames).forEach((roleName) -> {

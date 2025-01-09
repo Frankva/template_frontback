@@ -14,7 +14,7 @@ public class UserSeeder implements CommandLineRunner {
         
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public UserSeeder(UserRepository userRepository,
         PasswordEncoder passwordEncoder,

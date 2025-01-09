@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,6 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     @JsonIgnore // avoid infinite recursion on print
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 }
 

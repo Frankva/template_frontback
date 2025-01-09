@@ -47,14 +47,15 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         for (Role role : this.roles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_"
-                    + role.getName().toString()));
+            authorities.addAll(role.getName().getGrantedAuthorities());
+            //authorities.add(new SimpleGrantedAuthority("ROLE_"
+            //        + role.getName().toString()));
         }
         return authorities;
     }
     
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     // Constructors
     public User() {
